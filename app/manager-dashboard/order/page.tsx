@@ -631,7 +631,7 @@ const [newItems, setNewItems] = useState<OrderItem[]>([
   </option>
 ))}
                       </select>
-                      <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "#6b6966" }} />
+                      {/* <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "#6b6966" }} /> */}
                     </div>
 <input
   type="number"
