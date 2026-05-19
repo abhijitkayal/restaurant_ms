@@ -5,9 +5,25 @@ const branchSchema =
     {
       branchName: String,
 
+      restaurantName: String,
+
       address: String,
 
       phone: String,
+
+      email: String,
+
+      trackingEmail: String,
+
+      accountNo: String,
+
+      ifscCode: String,
+
+      gstin: String,
+
+      logoUrl: String,
+
+      logoPublicId: String,
 
       managerName: String,
     },

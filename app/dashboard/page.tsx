@@ -109,7 +109,7 @@ export default function ManagerDashboard() {
           <p style={{ color: "#6b6966" }} className="text-sm">Live restaurant overview — auto-refreshes every 30 seconds.</p>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: ".8rem" }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#6b6966", background: "var(--surface-100)", border: "1px solid var(--surface-200)", borderRadius: "8px", padding: "6px 12px" }}>{time}</div>
+          <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "13px", color: "#6b6966", background: "var(--surface-100)", border: "1px solid var(--surface-200)", borderRadius: "8px", padding: "6px 12px" }}>{time}</div>
           <button onClick={() => load()} style={{ background: "var(--surface-100)", border: "1px solid var(--surface-200)", borderRadius: "8px", padding: "7px 12px", cursor: "pointer", color: "#6b6966", display: "flex", alignItems: "center", gap: ".4rem", fontSize: "12px" }}>
             <RefreshCw size={13} style={{ animation: loading ? "spin 1s linear infinite" : "none" }} />
             {loading ? "Refreshing…" : `Updated ${lastRefresh.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`}

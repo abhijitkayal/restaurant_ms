@@ -105,11 +105,11 @@ export default function WaiterDashboard() {
   const billOrders = orders.filter((o) => o.status === "Served" && o.paymentStatus === "Unpaid");
 
   return (
-    <div style={{ background: "#faf7f2", minHeight: "100vh", color: "#2a2520", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ background: "#faf7f2", minHeight: "100vh", color: "#2a2520", fontFamily: '"Times New Roman", Times, serif' }}>
       {/* Header */}
       <div style={{ background: "#fff", borderBottom: "1px solid #e8e0d4", padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", color: "#2a2520", fontWeight: 600 }}>My Section</h1>
+          <h1 style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "22px", color: "#2a2520", fontWeight: 600 }}>My Section</h1>
           <p style={{ fontSize: "12px", color: "#9a8e7e", marginTop: "2px" }}>Waiter Dashboard · Tables 1–15</p>
         </div>
         <div style={{ display: "flex", gap: ".6rem", alignItems: "center" }}>
@@ -132,7 +132,7 @@ export default function WaiterDashboard() {
             { label: "Free tables", count: tables.filter(t => t.status === "free").length, color: "#9a8e7e", bg: "#f5f3ef", border: "#e8e0d4" },
           ].map(p => (
             <div key={p.label} style={{ background: p.bg, border: `1px solid ${p.border}`, borderRadius: "8px", padding: "6px 14px", fontSize: "12px", color: p.color, fontWeight: 500 }}>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", marginRight: "6px" }}>{p.count}</span>
+              <span style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "18px", marginRight: "6px" }}>{p.count}</span>
               {p.label}
             </div>
           ))}
@@ -152,10 +152,10 @@ export default function WaiterDashboard() {
             const c = colors[t.status];
             return (
               <div key={t.number} style={{ background: c.bg, border: `1.5px solid ${c.border}`, borderRadius: "10px", padding: ".7rem .5rem", textAlign: "center", transition: "all .2s" }}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 600, color: "#2a2520", lineHeight: 1 }}>{t.number}</div>
+                    <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "20px", fontWeight: 600, color: "#2a2520", lineHeight: 1 }}>{t.number}</div>
                 <div style={{ fontSize: "10px", marginTop: "4px", fontWeight: 500, textTransform: "uppercase", letterSpacing: ".04em", color: c.textColor }}>{STATUS_LABEL[t.status]}</div>
                 {t.minutes !== undefined && t.status !== "free" && (
-                  <div style={{ fontSize: "10px", color: "#6b7280", marginTop: "2px", fontFamily: "'JetBrains Mono', monospace" }}>
+                  <div style={{ fontSize: "10px", color: "#6b7280", marginTop: "2px", fontFamily: '"Times New Roman", Times, serif' }}>
                     {t.status === "bill" ? `₹${t.amount?.toFixed(0)}` : `${t.minutes} min`}
                   </div>
                 )}
@@ -182,7 +182,7 @@ export default function WaiterDashboard() {
               return (
                 <div key={order._id} style={{ background: "#fff", border: "1px solid #e8e0d4", borderRadius: "12px", padding: "1rem", borderLeft: order.status === "Ready" ? "3px solid #16a34a" : order.status === "Pending" ? "3px solid #d4841a" : "3px solid #93c5fd" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: ".5rem" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", color: "#a06b10" }}>{order.orderNumber}</span>
+                    <span style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "11px", color: "#a06b10" }}>{order.orderNumber}</span>
                     <span className={`badge ${badge.cls}`}>{badge.label}</span>
                   </div>
                   <div style={{ fontSize: "14px", fontWeight: 600, color: "#2a2520", marginBottom: ".5rem" }}>

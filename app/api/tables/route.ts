@@ -61,6 +61,14 @@ export async function POST(
 
     const body = await req.json();
 
+    // require branch in body to scope tables per branch
+    if (!body?.branch) {
+      return NextResponse.json(
+        { success: false, message: "branch is required" },
+        { status: 400 }
+      );
+    }
+
     const table = await Table.create(body);
 
     return NextResponse.json({
@@ -70,14 +78,17 @@ export async function POST(
   } catch (error) {
     console.log(error);
 
+    // handle duplicate key (unique index) errors
+    // Mongo duplicate key error code is 11000
+    const isDuplicate = (error as any)?.code === 11000;
+
     return NextResponse.json(
       {
         success: false,
-        message:
-          "Table already exists",
+        message: isDuplicate ? "Table with this number already exists for the branch" : "Failed to create table",
       },
       {
-        status: 500,
+        status: isDuplicate ? 409 : 500,
       }
     );
   }

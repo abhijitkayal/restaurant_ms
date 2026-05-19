@@ -122,13 +122,13 @@
 //     loadOrders(parsedUser.branch || null);
 //   }, []);
 
-//   return (
+//     return (
 //     <div
 //       style={{
 //         minHeight: "100vh",
 //         background: "#000",
 //         padding: "30px",
-//         fontFamily: "'DM Sans', sans-serif",
+//         fontFamily: '"Times New Roman", Times, serif',
 //       }}
 //     >
 //       {/* Header */}
@@ -614,7 +614,7 @@ export default function TablesPage() {
           background: transparent;
           color: #fff;
           padding: 30px;
-          font-family: 'Outfit', 'DM Sans', sans-serif;
+          font-family: "Times New Roman", Times, serif;
         }
 
         /* HEADER */
@@ -898,13 +898,9 @@ export default function TablesPage() {
             <h1 className="tbl-title">Restaurant Tables</h1>
             <p className="tbl-subtitle">Select a table to manage chairs</p>
           </div>
-          <button className="tbl-add-btn" onClick={() => setShowAddModal(true)}>
-            <Plus size={16} />
-            Add Table
-          </button>
         </div>
 
-        {/* TABLE GRID */}
+          {/* TABLE GRID */}
         <div className="tbl-grid">
           {tables.map((table) => {
             const chairArr = Array.isArray(table.chairs)

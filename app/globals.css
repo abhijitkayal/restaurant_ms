@@ -21,7 +21,7 @@
 body {
   background-color: var(--surface);
   color: #e8e6e3;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 ::-webkit-scrollbar {
@@ -36,7 +36,7 @@ body {
 }
 
 .font-display {
-  font-family: 'Playfair Display', serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .glass {
@@ -96,7 +96,7 @@ body {
   padding: 0.5rem 0.75rem;
   color: #e8e6e3;
   width: 100%;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 0.875rem;
   transition: border-color 0.2s;
 }

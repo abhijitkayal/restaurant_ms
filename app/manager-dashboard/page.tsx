@@ -12,6 +12,7 @@ import {
   Table,
   Warehouse,
   User,
+  Settings2,
 } from "lucide-react";
 
 import {
@@ -62,10 +63,52 @@ const orders = [
   },
 ];
 
+type BranchSettingsForm = {
+  branchName: string;
+  trackingEmail: string;
+  restaurantName: string;
+  address: string;
+  phone: string;
+  email: string;
+  accountNo: string;
+  ifscCode: string;
+  gstin: string;
+  logoUrl: string;
+  logoPublicId: string;
+  managerName: string;
+};
+
+const EMPTY_SETTINGS_FORM: BranchSettingsForm = {
+  branchName: "",
+  trackingEmail: "",
+  restaurantName: "",
+  address: "",
+  phone: "",
+  email: "",
+  accountNo: "",
+  ifscCode: "",
+  gstin: "",
+  logoUrl: "",
+  logoPublicId: "",
+  managerName: "",
+};
+
 export default function ManagerDashboard() {
   const buildDisplayLogoUrl = (url: string) => {
     const separator = url.includes("?") ? "&" : "?";
     return `${url}${separator}t=${Date.now()}`;
+  };
+
+  const getStoredUserEmail = () => {
+    try {
+      const user = localStorage.getItem("user");
+      if (!user) return "";
+
+      const parsedUser = JSON.parse(user);
+      return parsedUser?.email || "";
+    } catch {
+      return "";
+    }
   };
 
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -79,6 +122,11 @@ export default function ManagerDashboard() {
     useState(false);
   const [logoError, setLogoError] =
     useState<string | null>(null);
+  const [settingsId, setSettingsId] = useState<string | null>(null);
+  const [settingsForm, setSettingsForm] = useState<BranchSettingsForm>(EMPTY_SETTINGS_FORM);
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  const [settingsSaving, setSettingsSaving] = useState(false);
+  const [settingsMessage, setSettingsMessage] = useState<string | null>(null);
   const [dashboardData, setDashboardData] =
   useState({
     totalRevenue: 0,
@@ -107,31 +155,44 @@ useEffect(() => {
   } else {
     try {
       const u = localStorage.getItem("user");
-      setBranch(u ? JSON.parse(u).branch : null);
+      const parsedUser = u ? JSON.parse(u) : null;
+      setBranch(parsedUser ? parsedUser.branch : null);
+      setSettingsForm((prev) => ({
+        ...prev,
+        trackingEmail: parsedUser?.email || prev.trackingEmail,
+      }));
     } catch {
       setBranch(null);
     }
   }
 }, []);
 
-async function loadNotifications() {
+async function loadNotifications(branchName = branch) {
   try {
-    const response = await fetch(`/api/notifications${branch ? `?branchName=${encodeURIComponent(branch)}` : ""}`);
+    if (!branchName) {
+      setNotifications([]);
+      return;
+    }
+
+    const response = await fetch(`/api/notifications?branchName=${encodeURIComponent(branchName)}`);
 
     const data =
       await response.json();
 
     if (data.success) {
-      setNotifications(data.data);
+      setNotifications((data.data || []).filter((n: any) => n.branch === branchName));
+    } else {
+      setNotifications([]);
     }
   } catch (error) {
     console.log(error);
+    setNotifications([]);
   }
 }
-  async function loadDashboard() {
+  async function loadDashboard(branchName = branch) {
   try {
     const response = await fetch(
-      `/api/manager-dashboard${branch ? `?branchName=${encodeURIComponent(branch)}` : ""}`
+      `/api/manager-dashboard${branchName ? `?branchName=${encodeURIComponent(branchName)}` : ""}`
     );
 
     const data =
@@ -187,9 +248,41 @@ async function uploadLogo(
     if (
       uploadedUrl
     ) {
+      const updatedForm = {
+        ...settingsForm,
+        branchName: settingsForm.branchName.trim() || branch || "",
+        trackingEmail:
+          settingsForm.trackingEmail.trim() || getStoredUserEmail(),
+        logoUrl: uploadedUrl,
+        logoPublicId: data.public_id || settingsForm.logoPublicId,
+      };
+
       setLogo(
         buildDisplayLogoUrl(uploadedUrl)
       );
+
+      setSettingsForm(updatedForm);
+
+      if (branch) {
+        const response = await fetch(
+          settingsId ? `/api/branches/${settingsId}` : "/api/branches",
+          {
+            method: settingsId ? "PUT" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedForm),
+          }
+        );
+
+        const saved = await response.json();
+
+        if (!response.ok || !saved.success) {
+          throw new Error(
+            saved?.message || "Logo uploaded but failed to save branch settings"
+          );
+        }
+
+        setSettingsId(saved?.data?._id || settingsId);
+      }
 
       localStorage.setItem(
         "restaurantLogo",
@@ -210,6 +303,155 @@ async function uploadLogo(
     setLogoUploading(false);
   }
 }
+
+async function loadSettings(branchName = branch) {
+  if (!branchName) {
+    setSettingsForm(EMPTY_SETTINGS_FORM);
+    setSettingsId(null);
+    return;
+  }
+
+  setSettingsLoading(true);
+  setSettingsMessage(null);
+
+  try {
+    const trackingEmail = getStoredUserEmail();
+    const query = trackingEmail
+      ? `/api/branches?branchName=${encodeURIComponent(branchName)}&trackingEmail=${encodeURIComponent(trackingEmail)}`
+      : `/api/branches?branchName=${encodeURIComponent(branchName)}`;
+
+    const response = await fetch(query);
+    const data = await response.json();
+    const settings = data?.data?.[0];
+
+    if (!settings) {
+      setSettingsId(null);
+      setSettingsForm((prev) => ({
+        ...EMPTY_SETTINGS_FORM,
+        branchName,
+        trackingEmail: prev.trackingEmail || trackingEmail,
+        logoUrl: prev.logoUrl,
+        logoPublicId: prev.logoPublicId,
+      }));
+      return;
+    }
+
+    setSettingsId(settings._id);
+    setSettingsForm({
+      branchName: settings.branchName || branchName,
+      trackingEmail: settings.trackingEmail || trackingEmail,
+      restaurantName: settings.restaurantName || "",
+      address: settings.address || "",
+      phone: settings.phone || "",
+      email: settings.email || "",
+      accountNo: settings.accountNo || "",
+      ifscCode: settings.ifscCode || "",
+      gstin: settings.gstin || "",
+      logoUrl: settings.logoUrl || "",
+      logoPublicId: settings.logoPublicId || "",
+      managerName: settings.managerName || "",
+    });
+
+    if (settings.logoUrl) {
+      const displayLogo = buildDisplayLogoUrl(settings.logoUrl);
+      setLogo(displayLogo);
+      localStorage.setItem("restaurantLogo", settings.logoUrl);
+    }
+  } catch (error) {
+    console.log(error);
+    setSettingsMessage("Failed to load branch settings");
+  } finally {
+    setSettingsLoading(false);
+  }
+}
+
+async function saveSettings() {
+  if (!branch) {
+    setSettingsMessage("Branch is required before saving settings");
+    return;
+  }
+
+  setSettingsSaving(true);
+  setSettingsMessage(null);
+
+  try {
+    const trackingEmail =
+      settingsForm.trackingEmail.trim() || getStoredUserEmail();
+
+    const payload = {
+      ...settingsForm,
+      branchName: settingsForm.branchName.trim() || branch,
+      trackingEmail,
+    };
+
+    const response = await fetch(
+      settingsId ? `/api/branches/${settingsId}` : "/api/branches",
+      {
+        method: settingsId ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    if (!response.ok || !data.success) {
+      throw new Error(data?.message || "Failed to save settings");
+    }
+
+    const saved = data.data;
+
+    setSettingsId(saved?._id || settingsId);
+    setSettingsForm({
+      branchName: saved?.branchName || payload.branchName,
+      trackingEmail: saved?.trackingEmail || payload.trackingEmail,
+      restaurantName: saved?.restaurantName || payload.restaurantName,
+      address: saved?.address || payload.address,
+      phone: saved?.phone || payload.phone,
+      email: saved?.email || payload.email,
+      accountNo: saved?.accountNo || payload.accountNo,
+      ifscCode: saved?.ifscCode || payload.ifscCode,
+      gstin: saved?.gstin || payload.gstin,
+      logoUrl: saved?.logoUrl || payload.logoUrl,
+      logoPublicId: saved?.logoPublicId || payload.logoPublicId,
+      managerName: saved?.managerName || payload.managerName,
+    });
+
+    if (payload.logoUrl) {
+      localStorage.setItem("restaurantLogo", payload.logoUrl);
+      setLogo(buildDisplayLogoUrl(payload.logoUrl));
+    }
+
+    if (payload.branchName !== branch) {
+      setBranch(payload.branchName);
+
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) {
+        try {
+          const parsedUser = JSON.parse(savedUser);
+          parsedUser.branch = payload.branchName;
+              if (trackingEmail) {
+                parsedUser.email = trackingEmail;
+              }
+          localStorage.setItem("user", JSON.stringify(parsedUser));
+        } catch {
+          // ignore malformed cached user data
+        }
+      }
+    }
+
+    setSettingsMessage("Settings saved successfully");
+    await loadNotifications(payload.branchName);
+    await loadDashboard(payload.branchName);
+  } catch (error) {
+    setSettingsMessage(
+      error instanceof Error ? error.message : "Failed to save settings"
+    );
+  } finally {
+    setSettingsSaving(false);
+  }
+}
 useEffect(() => {
   const savedLogo =
     localStorage.getItem(
@@ -220,6 +462,11 @@ useEffect(() => {
     setLogo(buildDisplayLogoUrl(savedLogo));
   }
 }, []);
+useEffect(() => {
+  if (activeTab === "settings") {
+    void loadSettings();
+  }
+}, [activeTab, branch]);
 useEffect(() => {
   if (branch !== null) {
     loadDashboard();
@@ -256,8 +503,11 @@ useEffect(() => {
 }, [notifications]);
 
   useEffect(() => {
-    // Allow admin to view dashboard with branchName parameter without login
-    if (queryBranchName) {
+    // Allow admin to view dashboard with branchName parameter without login.
+    // Re-read from URL here to avoid timing issues between effects.
+    const params = new URLSearchParams(window.location.search);
+    const adminBranchName = params.get("branchName");
+    if (adminBranchName) {
       return;
     }
 
@@ -513,7 +763,7 @@ useEffect(() => {
   }
 );
 
-            loadNotifications();
+            loadNotifications(branch || undefined);
           }}
           style={{
             background:
@@ -716,6 +966,31 @@ useEffect(() => {
           >
             <User size={18} />
             Employee
+          </button>
+          <button
+            onClick={() => setActiveTab("settings")}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              background:
+                activeTab === "settings"
+                  ? "#f59e0b"
+                  : "transparent",
+              border: "none",
+              color:
+                activeTab === "settings"
+                  ? "#000"
+                  : "#fff",
+              padding: "14px",
+              borderRadius: "12px",
+              cursor: "pointer",
+              fontSize: "15px",
+              fontWeight: "600",
+            }}
+          >
+            <Settings2 size={18} />
+            Settings
           </button>
         </div>
 
@@ -993,6 +1268,89 @@ useEffect(() => {
          
             
           <EmployeePage />
+        )}
+        {activeTab === "settings" && (
+          <div style={{ width: "100%", minHeight: "100%" }}>
+            <h1 style={{ fontSize: "32px", marginBottom: "8px" }}>Settings</h1>
+            <p style={{ color: "#9ca3af", marginBottom: "20px" }}>
+              Update restaurant profile, branch details, bank information, GST, contact info, and logo.
+            </p>
+
+            <div style={{ background: "#1f1f1f", border: "1px solid #2a2a2a", borderRadius: "18px", padding: "24px", width: "100%", minHeight: "calc(100vh - 180px)" }}>
+              {settingsLoading ? (
+                <div style={{ color: "#9ca3af", padding: "16px 0" }}>Loading settings...</div>
+              ) : (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: "16px" }}>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <label style={{ display: "block", fontSize: "12px", color: "#9ca3af", marginBottom: "6px" }}>Logo</label>
+                    <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
+                      <div style={{ width: "72px", height: "72px", borderRadius: "16px", background: "#111", border: "1px solid #2a2a2a", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {logo ? (
+                          <img src={logo} alt="Restaurant logo preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        ) : (
+                          <span style={{ color: "#6b7280", fontSize: "12px", textAlign: "center", padding: "4px" }}>No logo</span>
+                        )}
+                      </div>
+                      <label style={{ background: "#f59e0b", color: "#000", borderRadius: "10px", padding: "10px 14px", cursor: logoUploading ? "not-allowed" : "pointer", fontWeight: 700, opacity: logoUploading ? 0.7 : 1 }}>
+                        {logoUploading ? "Uploading..." : "Upload Logo"}
+                        <input
+                          type="file"
+                          accept="image/*"
+                          hidden
+                          disabled={logoUploading}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              void uploadLogo(file);
+                            }
+                            e.currentTarget.value = "";
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {[
+                    { key: "restaurantName", label: "Name", placeholder: "Restaurant name" },
+                    { key: "branchName", label: "Branch Name", placeholder: "Main branch" },
+                    { key: "trackingEmail", label: "Tracking Email", placeholder: "track@example.com" },
+                    { key: "address", label: "Address", placeholder: "Street, city, state" },
+                    { key: "phone", label: "Phone", placeholder: "+91..." },
+                    { key: "email", label: "Email", placeholder: "name@example.com" },
+                    { key: "accountNo", label: "Account No", placeholder: "Bank account number" },
+                    { key: "ifscCode", label: "IFSC Code", placeholder: "Bank IFSC" },
+                    { key: "gstin", label: "GST IN", placeholder: "GST number" },
+                  ].map((field) => (
+                    <div key={field.key}>
+                      <label style={{ display: "block", fontSize: "12px", color: "#9ca3af", marginBottom: "6px" }}>{field.label}</label>
+                      <input
+                        value={settingsForm[field.key as keyof BranchSettingsForm] as string}
+                        onChange={(e) => setSettingsForm((prev) => ({ ...prev, [field.key]: e.target.value }))}
+                        placeholder={field.placeholder}
+                        style={{ width: "100%", background: "#111", border: "1px solid #2a2a2a", borderRadius: "10px", padding: "12px 14px", color: "#fff", outline: "none" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {settingsMessage && (
+                <div style={{ marginTop: "16px", color: settingsMessage.includes("success") ? "#4ade80" : "#f87171", fontSize: "13px" }}>
+                  {settingsMessage}
+                </div>
+              )}
+
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+                <button
+                  onClick={() => void saveSettings()}
+                  disabled={settingsSaving}
+                  style={{ background: "#f59e0b", color: "#000", border: "none", borderRadius: "10px", padding: "12px 18px", cursor: settingsSaving ? "not-allowed" : "pointer", fontWeight: 700, opacity: settingsSaving ? 0.7 : 1 }}
+                >
+                  {settingsSaving ? "Saving..." : "Save Settings"}
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

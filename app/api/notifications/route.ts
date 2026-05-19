@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const branch = url.searchParams.get("branch");
 
     // Require either branchName or branch parameter for data security
-    const userBranch = branchName || branch;
+    const userBranch = (branchName || branch || "").trim();
     if (!userBranch) {
       return NextResponse.json(
         {

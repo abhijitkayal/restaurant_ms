@@ -124,8 +124,7 @@ export default function CookPage() {
         background: "transparent",
         color: "#fff",
         padding: "30px",
-        fontFamily:
-          "'DM Sans', sans-serif",
+        fontFamily: '"Times New Roman", Times, serif',
       }}
     >
       {/* HEADER */}

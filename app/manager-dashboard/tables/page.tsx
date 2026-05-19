@@ -859,19 +859,34 @@ export default function TablesPage() {
 
   async function addTable() {
     if (!tableNumber || !chairs) return alert("Fill all fields");
-    await fetch("/api/tables", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        tableNumber: Number(tableNumber),
-        chairs: Array.from({ length: Number(chairs) }, (_, i) => ({ number: i + 1, occupied: false })),
-        branch,
-      }),
-    });
-    setShowAddModal(false);
-    setTableNumber("");
-    setChairs("");
-    loadTables();
+    if (!branch) return alert("Branch is required before creating a table");
+
+    try {
+      const res = await fetch("/api/tables", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tableNumber: Number(tableNumber),
+          chairs: Array.from({ length: Number(chairs) }, (_, i) => ({ number: i + 1, occupied: false })),
+          branch,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data?.message || `Failed to create table (${res.status})`);
+        return;
+      }
+
+      setShowAddModal(false);
+      setTableNumber("");
+      setChairs("");
+      loadTables();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create table");
+    }
   }
 
   return (
@@ -882,7 +897,7 @@ export default function TablesPage() {
           background: #transparent;
           color: #fff;
           padding: 30px;
-          font-family: 'Outfit', 'DM Sans', sans-serif;
+          font-family: "Times New Roman", Times, serif;
         }
 
         /* HEADER */

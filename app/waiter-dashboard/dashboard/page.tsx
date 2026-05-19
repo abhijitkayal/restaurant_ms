@@ -61,7 +61,7 @@ export default function WaiterOrdersPage() {
           background: #000;
           color: #fff;
           padding: 32px;
-          font-family: 'Outfit', sans-serif;
+          font-family: "Times New Roman", Times, serif;
         }
 
         /* HEADER */
@@ -97,7 +97,7 @@ export default function WaiterOrdersPage() {
           font-weight: 600;
           font-size: 13px;
           color: #fff;
-          font-family: 'Outfit', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           transition: border-color 0.15s, background 0.15s;
         }
 
@@ -156,7 +156,7 @@ export default function WaiterOrdersPage() {
           font-weight: 700;
           color: #fff;
           margin-bottom: 3px;
-          font-family: 'JetBrains Mono', monospace;
+          font-family: "Times New Roman", Times, serif;
         }
 
         .wo-table-num { color: #666; font-size: 13px; }
@@ -178,7 +178,7 @@ export default function WaiterOrdersPage() {
           font-weight: 600;
           font-size: 13px;
           cursor: pointer;
-          font-family: 'Outfit', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           appearance: none;
           -webkit-appearance: none;
         }
@@ -220,7 +220,7 @@ export default function WaiterOrdersPage() {
 
         .wo-item-name { color: #fff; }
         .wo-item-qty  { color: #d4841a; font-weight: 700; margin-right: 6px; }
-        .wo-item-price{ color: #666; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+        .wo-item-price{ color: #666; font-family: "Times New Roman", Times, serif; font-size: 13px; }
 
         /* NOTES */
         .wo-notes {
@@ -257,7 +257,7 @@ export default function WaiterOrdersPage() {
           font-weight: 700;
           color: #fff;
           text-align: right;
-          font-family: 'JetBrains Mono', monospace;
+          font-family: "Times New Roman", Times, serif;
         }
       `}</style>
 

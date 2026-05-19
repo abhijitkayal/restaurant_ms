@@ -98,7 +98,20 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
 
-    const { tableNumber, items, notes, branch } = body;
+    const { tableNumber, items, notes } = body;
+    const branch = (body?.branch || "").trim();
+
+    if (!branch) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Branch is required",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     const subtotal = items.reduce(
       (sum: number, item: any) =>
@@ -170,7 +183,7 @@ await Notification.create({
   type: "order",
   branch,
   managerRead: false,
-  waiterRead: true,
+  waiterRead: false,
   cookRead: false,
 });
 

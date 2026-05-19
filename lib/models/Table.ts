@@ -18,7 +18,6 @@ const TableSchema = new Schema(
     tableNumber: {
       type: Number,
       required: true,
-      unique: true,
     },
 
     chairs: [ChairSchema],
@@ -41,6 +40,9 @@ const TableSchema = new Schema(
     timestamps: true,
   }
 );
+
+// Make tableNumber unique per branch (compound index)
+TableSchema.index({ tableNumber: 1, branch: 1 }, { unique: true });
 
 const Table =
   models.Table ||

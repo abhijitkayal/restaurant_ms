@@ -131,11 +131,11 @@ export default function CookDashboard() {
     : 0;
 
   return (
-    <div style={{ background: "#111", minHeight: "100vh", color: "#f0ece4", fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ background: "#111", minHeight: "100vh", color: "#f0ece4", fontFamily: '"Times New Roman", Times, serif' }}>
       {/* Header */}
       <div style={{ background: "#161616", borderBottom: "1px solid #2a2a2a", padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "15px", fontWeight: 500, letterSpacing: ".06em", textTransform: "uppercase", color: "#f0ece4" }}>
+          <h1 style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "15px", fontWeight: 500, letterSpacing: ".06em", textTransform: "uppercase", color: "#f0ece4" }}>
             Kitchen Display
           </h1>
           <button onClick={() => load()} style={{ background: "none", border: "1px solid #2a2a2a", borderRadius: "6px", padding: "5px 9px", cursor: "pointer", color: "#555" }}>
@@ -144,23 +144,23 @@ export default function CookDashboard() {
         </div>
         <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
           <div>
-            <div style={{ fontSize: "10px", color: "#555", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: ".06em" }}>Queue</div>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "20px", color: orders.length > 5 ? "#f87171" : "#f0ece4" }}>{orders.length} tickets</div>
+            <div style={{ fontSize: "10px", color: "#555", fontFamily: '"Times New Roman", Times, serif', textTransform: "uppercase", letterSpacing: ".06em" }}>Queue</div>
+            <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "20px", color: orders.length > 5 ? "#f87171" : "#f0ece4" }}>{orders.length} tickets</div>
           </div>
           <div style={{ borderLeft: "1px solid #2a2a2a", paddingLeft: "1.5rem" }}>
-            <div style={{ fontSize: "10px", color: "#555", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: ".06em" }}>Avg wait</div>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "20px", color: avgMins > 15 ? "#f87171" : "#4ade80" }}>{avgMins} min</div>
+            <div style={{ fontSize: "10px", color: "#555", fontFamily: '"Times New Roman", Times, serif', textTransform: "uppercase", letterSpacing: ".06em" }}>Avg wait</div>
+            <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "20px", color: avgMins > 15 ? "#f87171" : "#4ade80" }}>{avgMins} min</div>
           </div>
           <div style={{ borderLeft: "1px solid #2a2a2a", paddingLeft: "1.5rem" }}>
-            <div style={{ fontSize: "10px", color: "#555", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: ".06em" }}>Time</div>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "20px", color: "#e4a224" }}>{time || "--:--:--"}</div>
+            <div style={{ fontSize: "10px", color: "#555", fontFamily: '"Times New Roman", Times, serif', textTransform: "uppercase", letterSpacing: ".06em" }}>Time</div>
+            <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "20px", color: "#e4a224" }}>{time || "--:--:--"}</div>
           </div>
         </div>
       </div>
 
       {/* Low stock ticker */}
       {lowStock.length > 0 && (
-        <div style={{ background: "#e4a224", color: "#111", padding: "5px 1.5rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px", fontWeight: 500, display: "flex", gap: "2rem", overflowX: "hidden", whiteSpace: "nowrap" }}>
+        <div style={{ background: "#e4a224", color: "#111", padding: "5px 1.5rem", fontFamily: '"Times New Roman", Times, serif', fontSize: "11px", fontWeight: 500, display: "flex", gap: "2rem", overflowX: "hidden", whiteSpace: "nowrap" }}>
           <span style={{ flexShrink: 0 }}>⚠ LOW STOCK:</span>
           {lowStock.map((i, idx) => (
             <span key={idx} style={{ flexShrink: 0 }}>
@@ -176,7 +176,7 @@ export default function CookDashboard() {
 
         {/* Ticket column */}
         <div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", marginBottom: ".7rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
+          <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", marginBottom: ".7rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
             Active tickets — oldest first
           </div>
 
@@ -188,7 +188,7 @@ export default function CookDashboard() {
           ) : sorted.length === 0 ? (
             <div style={{ textAlign: "center", padding: "4rem", color: "#444" }}>
               <div style={{ fontSize: "32px", marginBottom: "8px" }}>✓</div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px" }}>All caught up!</div>
+              <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "13px" }}>All caught up!</div>
               <div style={{ fontSize: "12px", marginTop: "4px", color: "#333" }}>No tickets in queue</div>
             </div>
           ) : (
@@ -203,11 +203,11 @@ export default function CookDashboard() {
                     {/* Ticket header */}
                     <div style={{ padding: ".65rem 1rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #222", background: "#1a1a1a" }}>
                       <div>
-                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: u.numColor }}>{order.orderNumber}</span>
+                        <span style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "12px", color: u.numColor }}>{order.orderNumber}</span>
                         <span style={{ fontSize: "12px", color: "#666", marginLeft: ".6rem" }}>Table {order.tableNumber}</span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: u.timeColor, fontWeight: mins >= 10 ? 600 : 400 }}>
+                          <span style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "12px", color: u.timeColor, fontWeight: mins >= 10 ? 600 : 400 }}>
                           {mins >= 18 && "⚠ "}{mins} min
                         </span>
                         <span style={{ fontSize: "10px", background: order.status === "Preparing" ? "rgba(96,165,250,.15)" : "rgba(251,191,36,.15)", color: order.status === "Preparing" ? "#60a5fa" : "#fbbf24", border: `1px solid ${order.status === "Preparing" ? "rgba(96,165,250,.2)" : "rgba(251,191,36,.2)"}`, borderRadius: "999px", padding: "2px 7px", fontWeight: 600, letterSpacing: ".03em", textTransform: "uppercase" }}>
@@ -224,7 +224,7 @@ export default function CookDashboard() {
                         return (
                           <div key={idx} onClick={() => toggleItemDone(order._id, idx)}
                             style={{ display: "flex", alignItems: "center", gap: ".6rem", padding: "5px 0", borderBottom: idx < order.items.length - 1 ? "1px solid #1e1e1e" : "none", cursor: "pointer", opacity: done ? 0.35 : 1, transition: "opacity .2s" }}>
-                            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "14px", fontWeight: 500, color: u.numColor, width: "22px", flexShrink: 0 }}>{item.quantity}×</span>
+                            <span style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "14px", fontWeight: 500, color: u.numColor, width: "22px", flexShrink: 0 }}>{item.quantity}×</span>
                             <span style={{ fontSize: "13px", color: done ? "#444" : "#d0ccc6", flex: 1, textDecoration: done ? "line-through" : "none" }}>{item.name}</span>
                             <div style={{ width: "16px", height: "16px", borderRadius: "4px", border: `1px solid ${done ? "#4ade80" : "#333"}`, background: done ? "#4ade80" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                               {done && <span style={{ fontSize: "10px", color: "#111", fontWeight: 700 }}>✓</span>}
@@ -244,12 +244,12 @@ export default function CookDashboard() {
                     <div style={{ padding: ".6rem 1rem", borderTop: "1px solid #1e1e1e", display: "flex", gap: ".4rem", justifyContent: "flex-end" }}>
                       {order.status === "Pending" && (
                         <button onClick={() => markPreparing(order._id)}
-                          style={{ background: "rgba(96,165,250,.15)", color: "#60a5fa", border: "1px solid rgba(96,165,250,.2)", borderRadius: "6px", padding: "5px 12px", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, cursor: "pointer", textTransform: "uppercase", letterSpacing: ".04em" }}>
+                          style={{ background: "rgba(96,165,250,.15)", color: "#60a5fa", border: "1px solid rgba(96,165,250,.2)", borderRadius: "6px", padding: "5px 12px", fontSize: "11px", fontFamily: '"Times New Roman", Times, serif', fontWeight: 500, cursor: "pointer", textTransform: "uppercase", letterSpacing: ".04em" }}>
                           Start
                         </button>
                       )}
                       <button onClick={() => markReady(order._id)}
-                        style={{ background: allItemsDone ? "rgba(74,222,128,.2)" : "transparent", color: allItemsDone ? "#4ade80" : "#555", border: `1px solid ${allItemsDone ? "rgba(74,222,128,.3)" : "#333"}`, borderRadius: "6px", padding: "5px 12px", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, cursor: "pointer", textTransform: "uppercase", letterSpacing: ".04em", transition: "all .2s" }}>
+                        style={{ background: allItemsDone ? "rgba(74,222,128,.2)" : "transparent", color: allItemsDone ? "#4ade80" : "#555", border: `1px solid ${allItemsDone ? "rgba(74,222,128,.3)" : "#333"}`, borderRadius: "6px", padding: "5px 12px", fontSize: "11px", fontFamily: '"Times New Roman", Times, serif', fontWeight: 500, cursor: "pointer", textTransform: "uppercase", letterSpacing: ".04em", transition: "all .2s" }}>
                         Ready ↑
                       </button>
                     </div>
@@ -262,7 +262,7 @@ export default function CookDashboard() {
 
         {/* Side column */}
         <div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", marginBottom: ".7rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
+          <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", marginBottom: ".7rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
             Station stats
           </div>
 
@@ -273,14 +273,14 @@ export default function CookDashboard() {
             { label: "Avg wait time", value: `${avgMins} min`, sub: avgMins > 15 ? "⚠ Running behind" : "✓ On track", subColor: avgMins > 15 ? "#f87171" : "#4ade80" },
           ].map((s) => (
             <div key={s.label} style={{ background: "#1a1a1a", border: "1px solid #2a2a2a", borderRadius: "8px", padding: ".9rem 1rem", marginBottom: ".6rem" }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: "#555", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: ".3rem" }}>{s.label}</div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "24px", color: "#f0ece4", lineHeight: 1 }}>{s.value}</div>
+              <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "10px", color: "#555", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: ".3rem" }}>{s.label}</div>
+              <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "24px", color: "#f0ece4", lineHeight: 1 }}>{s.value}</div>
               <div style={{ fontSize: "11px", color: s.subColor || "#555", marginTop: ".3rem" }}>{s.sub}</div>
             </div>
           ))}
 
           {/* Low stock alerts */}
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", margin: ".8rem 0 .5rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
+          <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "10px", textTransform: "uppercase", letterSpacing: ".1em", color: "#444", margin: ".8rem 0 .5rem", paddingBottom: ".4rem", borderBottom: "1px solid #1e1e1e" }}>
             Inventory alerts
           </div>
 
@@ -293,7 +293,7 @@ export default function CookDashboard() {
                   <AlertTriangle size={12} style={{ color: item.quantity === 0 ? "#f87171" : "#e4a224", marginTop: "2px", flexShrink: 0 }} />
                   <div>
                     <div style={{ fontSize: "12px", color: "#ccc" }}>{item.name}</div>
-                    <div style={{ fontSize: "11px", color: "#555", fontFamily: "'JetBrains Mono', monospace" }}>
+                    <div style={{ fontSize: "11px", color: "#555", fontFamily: '"Times New Roman", Times, serif' }}>
                       {item.quantity} {item.unit} left · min {item.minStock}
                     </div>
                   </div>
@@ -304,7 +304,7 @@ export default function CookDashboard() {
 
           {/* Legend */}
           <div style={{ marginTop: "1rem", background: "#1a1a1a", border: "1px solid #2a2a2a", borderRadius: "8px", padding: ".8rem 1rem" }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "10px", color: "#444", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: ".5rem" }}>Legend</div>
+            <div style={{ fontFamily: '"Times New Roman", Times, serif', fontSize: "10px", color: "#444", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: ".5rem" }}>Legend</div>
             {[
               { color: "#2a2a2a", label: "New order (< 10 min)" },
               { color: "#e4a224", label: "Urgent (10–17 min)" },

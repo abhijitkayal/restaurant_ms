@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 interface Chair {
   _id: string;
-  chairNumber: number;
+  number: number;
   occupied: boolean;
 }
 
@@ -21,8 +21,18 @@ const [tables, setTables] =
 
   async function loadTables() {
     try {
+      const user = localStorage.getItem("user");
+      const branchName = user
+        ? JSON.parse(user).branch
+        : null;
+
+      if (!branchName) {
+        setTables([]);
+        return;
+      }
+
       const response = await fetch(
-        "/api/tables"
+        `/api/tables?branchName=${encodeURIComponent(branchName)}`
       );
 
       const data =
@@ -30,9 +40,12 @@ const [tables, setTables] =
 
       if (data.success) {
         setTables(data.data);
+      } else {
+        setTables([]);
       }
     } catch (error) {
       console.log(error);
+      setTables([]);
     }
   }
 
@@ -76,7 +89,7 @@ const [tables, setTables] =
   }
 
   return (
-    <div>
+    <div style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       <h1
         style={{
           fontSize: "32px",
@@ -240,7 +253,7 @@ const [tables, setTables] =
                 ],
               }}
             >
-              {chair.chairNumber}
+              {chair.number}
             </div>
           );
         }

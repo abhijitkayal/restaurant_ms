@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["'Playfair Display'", "serif"],
-        body: ["'DM Sans'", "sans-serif"],
-        mono: ["'JetBrains Mono'", "monospace"],
+        display: ["\"Times New Roman\", Times, serif"],
+        body: ["\"Times New Roman\", Times, serif"],
+        mono: ["\"Times New Roman\", Times, serif"],
       },
       colors: {
         brand: {

@@ -763,7 +763,7 @@ export default function MenuPage() {
           min-height: 100vh;
           background: transparent;
           color: #fff;
-          font-family: 'DM Sans', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           padding: 0px;
           display: flex;
           gap: 24px;
@@ -829,7 +829,7 @@ export default function MenuPage() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-weight: 700;
           font-size: 14px;
           letter-spacing: 0.3px;
@@ -861,7 +861,7 @@ export default function MenuPage() {
           color: #fff;
           text-transform: uppercase;
           letter-spacing: 1.2px;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
         }
 
         .menu-table tbody tr {
@@ -895,13 +895,13 @@ export default function MenuPage() {
 
         .menu-name-cell {
           font-weight: 500;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-size: 15px;
           color: #f0f0f0;
         }
 
         .price-cell {
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-size: 16px;
           font-weight: 700;
           color: #d4841a;
@@ -945,7 +945,7 @@ export default function MenuPage() {
         }
 
         .form-title {
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-size: 18px;
           font-weight: 800;
           color: #fff;
@@ -976,7 +976,7 @@ export default function MenuPage() {
           color: #fff;
           text-transform: uppercase;
           letter-spacing: 1px;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           margin-bottom: 6px;
         }
 
@@ -989,7 +989,7 @@ export default function MenuPage() {
           border: 1px solid #2a2a2a;
           background: transparent;
           color: #fff;
-          font-family: 'DM Sans', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-size: 14px;
           outline: none;
           transition: border-color 0.15s;
@@ -1054,7 +1054,7 @@ export default function MenuPage() {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-size: 13px;
           transition: border-color 0.15s, color 0.15s;
         }
@@ -1071,7 +1071,7 @@ export default function MenuPage() {
           padding: 14px;
           border-radius: 12px;
           cursor: pointer;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
           font-weight: 700;
           font-size: 15px;
           letter-spacing: 0.3px;
@@ -1090,7 +1090,7 @@ export default function MenuPage() {
           padding: 60px 28px;
           text-align: center;
           color: #fff;
-          font-family: 'Syne', sans-serif;
+          font-family: "Times New Roman", Times, serif;
         }
 
         .empty-icon {

@@ -207,10 +207,9 @@ export default function InventoryPage() {
       style={{
         minHeight: "100vh",
         background: "transparent",
+         fontFamily: "\"Times New Roman\", Times, serif",
         color: "#fff",
         padding: "30px",
-        fontFamily:
-          "'DM Sans', sans-serif",
       }}
     >
       {/* TOP BAR */}

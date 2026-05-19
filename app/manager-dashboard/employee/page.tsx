@@ -174,6 +174,7 @@ export default function EmployeePage() {
     <div
       style={{
         minHeight: "100vh",
+        fontFamily: "\"Times New Roman\", Times, serif",
         background: "transparent",
         color: "#fff",
         padding: "0px",

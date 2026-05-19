@@ -551,7 +551,7 @@ const [newItems, setNewItems] = useState<OrderItem[]>([
       {/* Filters */}
       <div className="flex gap-3 mb-6">
         <div className="relative flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#6b6966" }} />
+          <Search size={14} className="absolute left-1.5 top-1/2 -translate-y-1/2 flex bg-transparent justify-center items-center"  />
           <input className="input-field pl-9" placeholder="Search by order # or table..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
         <select className="input-field w-auto" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
