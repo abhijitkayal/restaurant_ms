@@ -31,6 +31,7 @@ import TablesPage from "./tables/page";
 import InventoryPage from "./inventory/page";
 import MenuPage from "./menu/page";
 import EmployeePage from "./employee/page";
+import Loader from "../components/Loader";
 
 const notificationSound =
   new Howl({
@@ -113,6 +114,7 @@ export default function ManagerDashboard() {
   };
 
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showLoading, setShowLoading] = useState(false);
   const [branch, setBranch] = useState<string | null>(null);
   const [queryBranchName, setQueryBranchName] = useState<string | null>(null);
   const [logo, setLogo] =
@@ -468,6 +470,15 @@ useEffect(() => {
     void loadSettings();
   }
 }, [activeTab, branch]);
+
+  function handleTabClick(tab: string) {
+    setShowLoading(true);
+    // ensure a minimal loader experience
+    setTimeout(() => {
+      setActiveTab(tab);
+      setShowLoading(false);
+    }, 200);
+  }
 useEffect(() => {
   if (branch !== null) {
     loadDashboard();
@@ -818,7 +829,7 @@ useEffect(() => {
           }}
         >
           <button
-            onClick={() => setActiveTab("dashboard")}
+            onClick={() => handleTabClick("dashboard")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -843,7 +854,7 @@ useEffect(() => {
             Dashboard
           </button>
           <button
-            onClick={() => setActiveTab("menu")}
+            onClick={() => handleTabClick("menu")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -869,7 +880,7 @@ useEffect(() => {
           </button>
 
           <button
-            onClick={() => setActiveTab("orders")}
+            onClick={() => handleTabClick("orders")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -894,7 +905,7 @@ useEffect(() => {
             Order
           </button>
           <button
-            onClick={() => setActiveTab("tables")}
+            onClick={() => handleTabClick("tables")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -919,7 +930,7 @@ useEffect(() => {
             Table
           </button>
           <button
-            onClick={() => setActiveTab("inventory")}
+            onClick={() => handleTabClick("inventory")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -944,7 +955,7 @@ useEffect(() => {
             Inventory
           </button>
           <button
-            onClick={() => setActiveTab("employee")}
+            onClick={() => handleTabClick("employee")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -969,7 +980,7 @@ useEffect(() => {
             Employee
           </button>
           <button
-            onClick={() => setActiveTab("settings")}
+            onClick={() => handleTabClick("settings")}
             style={{
               display: "flex",
               alignItems: "center",
@@ -1031,6 +1042,10 @@ useEffect(() => {
           padding: "30px",
         }}
       >
+        {showLoading ? (
+          <Loader />
+        ) : (
+          <>
         {/* Dashboard */}
         {activeTab === "dashboard" && (
           <div>
@@ -1352,6 +1367,8 @@ useEffect(() => {
               </div>
             </div>
           </div>
+        )}
+          </>
         )}
       </div>
     </div>

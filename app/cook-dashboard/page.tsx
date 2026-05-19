@@ -11,10 +11,13 @@ import {
 import { Howl } from "howler";
 // import WaiterOrdersPage from "./order/page";
 import OrderPage from "./order/page";
+import Loader from "../components/Loader";
 
 export default function WaiterDashboard() {
   const [activeTab, setActiveTab] =
     useState("dashboard");
+
+  const [showLoading, setShowLoading] = useState(false);
 
     const [
   dashboardData,
@@ -179,6 +182,14 @@ async function loadDashboard() {
     window.location.href = "/";
   }
 
+  function handleTabClick(tab: string) {
+    setShowLoading(true);
+    setTimeout(() => {
+      setActiveTab(tab);
+      setShowLoading(false);
+    }, 200);
+  }
+
   return (
     <div
      style={{
@@ -340,7 +351,7 @@ async function loadDashboard() {
           {/* Dashboard */}
           <button
             onClick={() =>
-              setActiveTab("dashboard")
+              handleTabClick("dashboard")
             }
             style={{
               display: "flex",
@@ -369,7 +380,7 @@ async function loadDashboard() {
           {/* Orders */}
           <button
             onClick={() =>
-              setActiveTab("orders")
+              handleTabClick("orders")
             }
             style={{
               display: "flex",
@@ -426,6 +437,10 @@ async function loadDashboard() {
           padding: "30px",
         }}
       >
+        {showLoading ? (
+          <Loader />
+        ) : (
+          <>
         {/* Dashboard Tab */}
         {activeTab === "dashboard" && (
           <div>
@@ -513,11 +528,11 @@ async function loadDashboard() {
 
         {/* Orders Tab */}
         {activeTab === "orders" && (
-         
-    <OrderPage/>
-
+          <OrderPage />
         )}
-        </div>
-        </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 }

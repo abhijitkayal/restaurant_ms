@@ -12,9 +12,11 @@ import { Howl } from "howler";
 
 import WaiterOrdersPage from "./dashboard/page";
 import WaiterTables from "./table/page";
+import Loader from "../components/Loader";
 
 export default function WaiterDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showLoading, setShowLoading] = useState(false);
   const [dashboardData, setDashboardData] = useState({
     totalOrders: 0,
     pendingOrders: 0,
@@ -131,6 +133,14 @@ export default function WaiterDashboard() {
     window.location.href = "/";
   }
 
+  function handleTabClick(tab: string) {
+    setShowLoading(true);
+    setTimeout(() => {
+      setActiveTab(tab);
+      setShowLoading(false);
+    }, 200);
+  }
+
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "";
   const logoSrc = branchSettings?.logoUrl || (branchSettings?.logoPublicId && cloudName ? `https://res.cloudinary.com/${cloudName}/image/upload/${branchSettings.logoPublicId}` : undefined);
 
@@ -179,15 +189,15 @@ export default function WaiterDashboard() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <button onClick={() => setActiveTab("dashboard")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "dashboard" ? "#d4841a" : "transparent", color: activeTab === "dashboard" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
+          <button onClick={() => handleTabClick("dashboard")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "dashboard" ? "#d4841a" : "transparent", color: activeTab === "dashboard" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
             <LayoutDashboard size={18} /> Dashboard
           </button>
 
-          <button onClick={() => setActiveTab("orders")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "orders" ? "#d4841a" : "transparent", color: activeTab === "orders" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
+          <button onClick={() => handleTabClick("orders")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "orders" ? "#d4841a" : "transparent", color: activeTab === "orders" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
             <ShoppingCart size={18} /> Orders
           </button>
 
-          <button onClick={() => setActiveTab("tables")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "tables" ? "#d4841a" : "transparent", color: activeTab === "tables" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
+          <button onClick={() => handleTabClick("tables")} style={{ display: "flex", alignItems: "center", gap: 12, background: activeTab === "tables" ? "#d4841a" : "transparent", color: activeTab === "tables" ? "#000" : "#fff", border: "none", borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 600 }}>
             <Table size={18} /> Table
           </button>
         </div>
@@ -198,6 +208,10 @@ export default function WaiterDashboard() {
       </div>
 
       <div style={{ flex: 1, padding: "30px" }}>
+        {showLoading ? (
+          <Loader />
+        ) : (
+          <>
         {activeTab === "dashboard" && (
           <div>
             <h1 style={{ fontSize: 34, fontWeight: 700, marginBottom: 20, color: "#fff" }}>Waiter Dashboard</h1>
@@ -220,6 +234,8 @@ export default function WaiterDashboard() {
 
         {activeTab === "orders" && <WaiterOrdersPage />}
         {activeTab === "tables" && <WaiterTables />}
+          </>
+        )}
       </div>
     </div>
   );

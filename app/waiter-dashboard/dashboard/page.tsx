@@ -58,7 +58,7 @@ export default function WaiterOrdersPage() {
 
         .wo-root {
           min-height: 100vh;
-          background: #000;
+          background: transparent;
           color: #fff;
           padding: 32px;
           font-family: "Times New Roman", Times, serif;
