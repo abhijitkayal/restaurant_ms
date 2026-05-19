@@ -206,7 +206,7 @@ export default function InventoryPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#000",
+        background: "transparent",
         color: "#fff",
         padding: "30px",
         fontFamily:

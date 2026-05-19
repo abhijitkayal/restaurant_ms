@@ -121,7 +121,7 @@ export default function CookPage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#000",
+        background: "transparent",
         color: "#fff",
         padding: "30px",
         fontFamily:
@@ -162,7 +162,46 @@ export default function CookPage() {
           gap: "22px",
         }}
       >
-        {orders.map((order) => (
+        {orders.length === 0 ? (
+  <div
+    style={{
+      gridColumn: "1/-1",
+      minHeight: "300px",
+      background: "#111",
+      border: "1px solid #222",
+      borderRadius: "24px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      gap: "14px",
+      color: "#777",
+    }}
+  >
+    <ChefHat
+      size={60}
+      color="#444"
+    />
+
+    <h2
+      style={{
+        fontSize: "24px",
+        fontWeight: "600",
+      }}
+    >
+      No Orders
+    </h2>
+
+    <p
+      style={{
+        color: "#666",
+      }}
+    >
+      No active orders available
+    </p>
+  </div>
+) : (
+  orders.map((order) => (
           <div
             key={order._id}
             style={{
@@ -384,7 +423,8 @@ export default function CookPage() {
               )}
             </div>
           </div>
-        ))}
+      ))
+)}
       </div>
     </div>
   );

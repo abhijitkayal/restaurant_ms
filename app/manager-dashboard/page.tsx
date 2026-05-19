@@ -9,6 +9,9 @@ import {
   ShoppingCart,
   LogOut,
   Bell,
+  Table,
+  Warehouse,
+  User,
 } from "lucide-react";
 
 import {
@@ -661,7 +664,7 @@ useEffect(() => {
               fontWeight: "600",
             }}
           >
-            <ShoppingCart size={18} />
+            <Table size={18} />
             Table
           </button>
           <button
@@ -686,7 +689,7 @@ useEffect(() => {
               fontWeight: "600",
             }}
           >
-            <ShoppingCart size={18} />
+            <Warehouse size={18} />
             Inventory
           </button>
           <button
@@ -711,7 +714,7 @@ useEffect(() => {
               fontWeight: "600",
             }}
           >
-            <ShoppingCart size={18} />
+            <User size={18} />
             Employee
           </button>
         </div>

@@ -174,9 +174,9 @@ export default function EmployeePage() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#000",
+        background: "transparent",
         color: "#fff",
-        padding: "30px",
+        padding: "0px",
         display: "flex",
         gap: "24px",
       }}
@@ -185,11 +185,10 @@ export default function EmployeePage() {
       <div
         style={{
           flex: 1,
-          background: "#111",
+          background: "transparent",
           borderRadius: "24px",
           overflow: "hidden",
-          border:
-            "1px solid #222",
+         
         }}
       >
         {/* HEADER */}
@@ -207,8 +206,9 @@ export default function EmployeePage() {
           <h1
             style={{
               fontSize: "34px",
-              color: "#d4841a",
+              color: "#fff",
             }}
+            className="font-display"
           >
             Employee Management
           </h1>
@@ -249,13 +249,16 @@ export default function EmployeePage() {
             width: "100%",
             borderCollapse:
               "collapse",
+              border:"1px solid #222",
+              // borderRadius:"30px",
           }}
+          
         >
           <thead>
             <tr
               style={{
                 background:
-                  "#181818",
+                  "#transparent",
               }}
             >
               <th
@@ -425,6 +428,11 @@ export default function EmployeePage() {
                           "pointer",
                         color:
                           "#fff",
+                          display:"flex",
+                          alignItems:
+                          "center",
+                        justifyContent:
+                          "center",
                       }}
                     >
                       <Trash2
@@ -440,112 +448,132 @@ export default function EmployeePage() {
       </div>
 
       {/* RIGHT FORM */}
-      {showForm && (
-        <div
+      {/* MODAL FORM */}
+{showForm && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100vh",
+      background: "rgba(0,0,0,0.7)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 999,
+      backdropFilter: "blur(4px)",
+    }}
+    onClick={() => setShowForm(false)}
+  >
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        width: "420px",
+        background: "#111",
+        borderRadius: "24px",
+        padding: "24px",
+        border: "1px solid #222",
+        boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+        animation: "popup 0.25s ease",
+      }}
+    >
+      {/* HEADER */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <h2>Create Employee</h2>
+
+        <button
+          onClick={() => setShowForm(false)}
           style={{
-            width: "420px",
-            background: "#111",
-            borderRadius: "24px",
-            padding: "24px",
-            border:
-              "1px solid #222",
-            height:
-              "fit-content",
+            background: "transparent",
+            border: "none",
+            color: "#999",
+            fontSize: "24px",
+            cursor: "pointer",
           }}
         >
-          <h2
-            style={{
-              marginBottom:
-                "20px",
-            }}
-          >
-            Create Employee
-          </h2>
+          ×
+        </button>
+      </div>
 
-          <div
-            style={{
-              display: "grid",
-              gap: "16px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Employee Name"
-              value={name}
-              onChange={(e) =>
-                setName(
-                  e.target.value
-                )
-              }
-              style={inputStyle}
-            />
+      {/* FORM */}
+      <div
+        style={{
+          display: "grid",
+          gap: "16px",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Employee Name"
+          value={name}
+          onChange={(e) =>
+            setName(e.target.value)
+          }
+          style={inputStyle}
+        />
 
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) =>
-                setEmail(
-                  e.target.value
-                )
-              }
-              style={inputStyle}
-            />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+          style={inputStyle}
+        />
 
-            <input
-              type="text"
-              placeholder="Password"
-              value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
-              style={inputStyle}
-            />
+        <input
+          type="text"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          style={inputStyle}
+        />
 
-            <select
-              value={role}
-              onChange={(e) =>
-                setRole(
-                  e.target.value
-                )
-              }
-              style={inputStyle}
-            >
-              <option value="waiter">
-                Waiter
-              </option>
+        <select
+          value={role}
+          onChange={(e) =>
+            setRole(e.target.value)
+          }
+          style={inputStyle}
+        >
+          <option value="waiter">
+            Waiter
+          </option>
 
-              <option value="cook">
-                Cook
-              </option>
-            </select>
+          <option value="cook">
+            Cook
+          </option>
+        </select>
 
-            <button
-              onClick={
-                createEmployee
-              }
-              style={{
-                background:
-                  "#d4841a",
-                border: "none",
-                color: "#fff",
-                padding:
-                  "14px",
-                borderRadius:
-                  "14px",
-                cursor:
-                  "pointer",
-                fontWeight:
-                  "600",
-              }}
-            >
-              Create Employee
-            </button>
-          </div>
-        </div>
-      )}
+        <button
+          onClick={createEmployee}
+          style={{
+            background: "#d4841a",
+            border: "none",
+            color: "#fff",
+            padding: "14px",
+            borderRadius: "14px",
+            cursor: "pointer",
+            fontWeight: "600",
+          }}
+        >
+          Create Employee
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

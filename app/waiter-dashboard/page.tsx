@@ -7,6 +7,7 @@ import {
   ShoppingCart,
   LogOut,
   Bell,
+  Table,
 } from "lucide-react";
 import WaiterOrdersPage from "./order/page";
 import WaiterTables from "./table/page";
@@ -492,7 +493,7 @@ useEffect(() => {
               fontWeight: "600",
             }}
           >
-            <LayoutDashboard size={18} />
+            <Table size={18} />
             Table
           </button>
         </div>
@@ -535,7 +536,7 @@ useEffect(() => {
                 fontSize: "34px",
                 fontWeight: "700",
                 marginBottom: "20px",
-                color: "#2a2520",
+                color: "#fff",
               }}
             >
               Waiter Dashboard
@@ -551,10 +552,10 @@ useEffect(() => {
             >
               <div
                 style={{
-                  background: "#fff",
+                  background: "transparent",
                   borderRadius: "18px",
                   padding: "24px",
-                  border: "1px solid #eee",
+                  border: "2px solid #eee",
                 }}
               >
                 <h3
@@ -580,10 +581,10 @@ useEffect(() => {
 
               <div
                 style={{
-                  background: "#fff",
+                  background: "transparent",
                   borderRadius: "18px",
                   padding: "24px",
-                  border: "1px solid #eee",
+                  border: "2px solid #eee",
                 }}
               >
                 <h3
@@ -609,10 +610,10 @@ useEffect(() => {
 
               <div
                 style={{
-                  background: "#fff",
+                  background: "#transparent",
                   borderRadius: "18px",
                   padding: "24px",
-                  border: "1px solid #eee",
+                  border: "2px solid #eee",
                 }}
               >
                 <h3

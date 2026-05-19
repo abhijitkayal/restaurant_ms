@@ -94,7 +94,26 @@ const [tables, setTables] =
     gap: "30px",
   }}
 >
-  {tables.map((table) => (
+  {tables.length === 0 ? (
+  <div
+    style={{
+      width: "100%",
+      minHeight: "300px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#1b1b1b",
+      border: "1px solid #2a2a2a",
+      borderRadius: "24px",
+      color: "#777",
+      fontSize: "22px",
+      fontWeight: "600",
+    }}
+  >
+    No Table Assign
+  </div>
+) : (
+  tables.map((table) => (
     <div
       key={table._id}
       style={{
@@ -227,7 +246,8 @@ const [tables, setTables] =
         }
       )}
     </div>
-  ))}
+  ))
+)}
 </div>
     </div>
   );
