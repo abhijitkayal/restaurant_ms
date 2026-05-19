@@ -13,6 +13,7 @@ import {
   Warehouse,
   User,
   Settings2,
+  Menu,
 } from "lucide-react";
 
 import {
@@ -863,7 +864,7 @@ useEffect(() => {
               fontWeight: "600",
             }}
           >
-            <LayoutDashboard size={18} />
+            <Menu size={18} />
             Menu
           </button>
 
